@@ -1,0 +1,19 @@
+data <-read.csv(file.choose(),header = TRUE)
+head(data)
+plot.ts(data$GDP)
+data.mean <- HoltWinters(data$GDP , alpha = 0.2 ,beta = 0.3 , gamma = FALSE)
+data.predict <-predict(data.mean , n.ahead = 2 ,prediction.interval =TRUE)
+data.predict
+plot.ts(data$GDP)
+
+
+
+
+
+
+#for plotting curve
+plot.ts(data$GDP,xlim=c(0,25))
+lines(data.mean$fitted[,1],col="green")
+lines(data.predict[,1],col="blue")
+lines(data.predict[,2],col="red")
+lines(data.predict[,3],col="red")
