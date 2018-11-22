@@ -1,0 +1,55 @@
+####reading the data
+data<-read.csv(file.choose(),header =TRUE)
+data1<-ts(data$GDP , frequency = 4)
+data1
+
+####ploting the curve
+plot.ts(data1, xlab="Time", xlim =c(0,60),ylab ="GDP")
+
+####HoltWinters function with paramters
+HW1<-HoltWinters(data1, alpha =0.2 ,beta = 0.1 , gamma = FALSE)  ### check with the loop.
+#using r specifed parameters
+HW2<-HoltWinters(data1)
+
+####plotting the curve
+plot.ts(data1, ylab ="GDP")
+lines(HW1$fitted[,1] , lty = 2 , col ="blue")
+lines(HW2$GDP[,1] , lty = 2  , col="red")
+
+
+####estimating using additive seasonality
+HW1.pred<-predict(HW1 , 2 , prediction.interval = TRUE)
+HW2.pred<-predict(HW2 , 2 , prediction.interval = TRUE)
+
+####ploting the  prediction for the fixed model
+
+
+lines(HW1$GDP[,1] , lty = 2 ,col ="red" )
+lines(HW1.pred[,1] , col = "blue")
+lines(HW1.pred[,2] , col = "seagreen" , lty = 2)
+lines(HW1.pred[,3] , col = "seagreen" , lty = 2)
+
+######Plot the pe]rediction for the estimated model
+
+plot.ts(HW2$GDP , ylab ="GDP" )
+lines(HW2$GDP[,1], lty = 2 ,col ="red" )
+lines(HW2.pred[,1] , col = "blue")
+lines(HW2.pred[,2] , col = "seagreen" , lty = 2)
+lines(HW2.pred[,3] , col = "seagreen" , lty = 2)
+
+
+###### Estimation using Holt-Winters using multiplication seasonality
+
+HW3<-HoltWinters(data1 ,  seasonal ="multiplicative"  )
+
+####predict the future prediction with this model
+
+HW3.pred<-predict(HW3 , 2 , prediction.interval = TRUE)
+
+#### plot the prediction for the estimated model
+
+plot.ts(data1 , ylab = "GDP" )
+lines(HW3$GDP[,1] , lty = 2 , col = "red")
+lines(HW3.pred[,1]  , col = "blue")
+lines(HW3$pred[,2]  , col = "seagreen" , lty = 2)
+lines(HW3$pred[,3]  , col = "seagreen" , lty = 2)
