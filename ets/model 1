@@ -12,7 +12,7 @@ plot.ts(data$GDP)
 
 
 #for plotting curve
-plot.ts(data$GDP,xlim=c(0,25))
+plot.ts(data$GDP,xlim=c(0,60))
 lines(data.mean$fitted[,1],col="green")
 lines(data.predict[,1],col="blue")
 lines(data.predict[,2],col="red")

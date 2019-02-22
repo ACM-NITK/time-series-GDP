@@ -1,6 +1,6 @@
 ####reading the data
 data<-read.csv(file.choose(),header =TRUE)
-data1<-ts(data$GDP , frequency = 4)
+data1<-ts(data$GDP , frequency = 1)
 data1
 
 ####ploting the curve
@@ -9,7 +9,7 @@ plot.ts(data1, xlab="Time", xlim =c(0,60),ylab ="GDP")
 ####HoltWinters function with paramters
 HW1<-HoltWinters(data1, alpha =0.2 ,beta = 0.1 , gamma = FALSE)  ### check with the loop.
 #using r specifed parameters
-HW2<-HoltWinters(data1)
+HW2<-HoltWinters(data1 , alpha = 1 ,beta =0 ,gamma = FALSE)
 
 ####plotting the curve
 plot.ts(data1, ylab ="GDP")
@@ -31,7 +31,8 @@ lines(HW1.pred[,3] , col = "seagreen" , lty = 2)
 
 ######Plot the pe]rediction for the estimated model
 
-plot.ts(HW2$GDP , ylab ="GDP" )
+##plot.ts(HW2$GDP , ylab ="GDP" )
+plot.ts(data1, ylab ="GDP" )
 lines(HW2$GDP[,1], lty = 2 ,col ="red" )
 lines(HW2.pred[,1] , col = "blue")
 lines(HW2.pred[,2] , col = "seagreen" , lty = 2)
